@@ -1,3 +1,6 @@
+// https://stepik.org/lesson/526883/step/5
+// Канал с результатами
+
 package main
 
 import (

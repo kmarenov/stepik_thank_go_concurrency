@@ -1,3 +1,6 @@
+// https://stepik.org/lesson/526883/step/3
+// Сколько цифр в каждом слове?
+
 package main
 
 import (
