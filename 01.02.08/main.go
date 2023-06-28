@@ -22,16 +22,31 @@ type pair struct {
 // countDigitsInWords считает количество цифр в словах,
 // выбирая очередные слова с помощью next()
 func countDigitsInWords(next nextFunc) counter {
+	pending := make(chan string)
 	counted := make(chan pair)
 
 	// начало решения
 
+	// отправляет слова на подсчет
 	go func() {
-		// Пройдите по словам,
+		// Пройдите по словам и отправьте их
+		// в канал pending
+		for {
+			word := next()
+			pending <- word
+			if word == "" {
+				return
+			}
+		}
+	}()
+
+	// считает цифры в словах
+	go func() {
+		// Считайте слова из канала pending,
 		// посчитайте количество цифр в каждом,
 		// и запишите его в канал counted
 		for {
-			word := next()
+			word := <-pending
 			count := countDigits(word)
 			counted <- pair{
 				word:  word,
